@@ -1,13 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
-const Plane = ({}) => {
+const Plane = ({planeSeats,setSelectedSeat}) => {
   const [seating, setSeating] = useState([]);
+  const [seat, setSeat] = useState('');
+
 
   useEffect(() => {
     // TODO: get seating data for selected flight
-  }, []);
-
+    setSeating(planeSeats)
+  }, [planeSeats]);
+  
+  const flightSeatClicked = (id) => {
+     setSeat(id)
+     setSelectedSeat(id)
+     const seatToSelect = document.getElementById(id)
+     seatToSelect.checked = true
+     seatToSelect.nextSibling.style.background = '#aa001e'
+     seatToSelect.nextSibling.style.color = '#fff'
+     if(seat !== ''){
+       const prevSeat = document.getElementById(seat)
+       prevSeat.nextSibling.style.background = 'none'
+       prevSeat.nextSibling.style.color = 'red'
+     }
+  }
+  
   return (
     <Wrapper>
       {seating && seating.length > 0 ? (
@@ -16,7 +33,7 @@ const Plane = ({}) => {
             <label>
               {seat.isAvailable ? (
                 <>
-                  <Seat type="radio" name="seat" onChange={() => {}} />
+                  <Seat type="radio" id={seat.id} name="seat" onChange={() => flightSeatClicked(seat.id)} />
                   <Available>{seat.id}</Available>
                 </>
               ) : (
@@ -58,6 +75,9 @@ const Wrapper = styled.ol`
   height: 500px;
   width: 300px;
   position: relative;
+ .seatSelected {
+   background-color: var(--color-alabama-crimson)
+ }
 `;
 const SeatWrapper = styled.li`
   display: flex;

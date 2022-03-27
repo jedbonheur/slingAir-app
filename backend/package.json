@@ -10,8 +10,13 @@
   "author": "Scott Morin <scott@journeyedu.co>",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "moment": "^2.24.0",
+    "mongoose": "^6.2.7",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
     "uuid": "^8.3.1"
