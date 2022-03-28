@@ -1,0 +1,19 @@
+[build]
+  command = "yarn build"
+  publish="frontend/build"
+  base = "frontend"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+query = {id = ":id"}
+
+[dev]
+  command = "yarn dev:backend"
+  port = 8000
+  targetPort = 3000
+  publish = "backend" 
+

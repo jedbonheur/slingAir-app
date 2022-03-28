@@ -31,6 +31,7 @@ const Login = () => {
       }
       if(response.status === 200) {
         setUserStatus('loggedin')
+      console.log(response.user)
         reactLocalStorage.setObject('user',response.user);
         setUserName(reactLocalStorage.getObject('user'))
         return history.push('/')

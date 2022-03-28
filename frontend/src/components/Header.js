@@ -16,7 +16,6 @@ const Header = () => {
     } = useContext(AppContext)
 
   // logout 
-
   const logout = (e) => {
     e.preventDefault();
     // logout
@@ -42,8 +41,19 @@ const Header = () => {
     e.preventDefault()
     history.push('/register')
   }
+  // view reservation
+  const viewMyReservations = (e) => {
+    console.log('clicked')
+    e.preventDefault()
+    history.push('/reservations')
+  }
+  // view profile
 
-
+  const viewProfile = (e) => {
+    e.preventDefault()
+    history.push('/profile')
+  }
+  
  return (
    <>
   <Wrapper>
@@ -53,15 +63,17 @@ const Header = () => {
     <Nav>
       {/* TODO: only show links if the user has a reservation already */}
       <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
        {user.username && (
-        <StyledNavLink to="/profile">{user.username}</StyledNavLink>
+        <button className="btn-header" onClick={viewMyReservations}>Reservation</button>
+       )}
+       {user.username && (
+        <button className="btn-header" onClick={viewProfile}>{user.username}</button>
        )} 
        {userStatus === 'loggedin' && (
-        <button className="btn-logout" onClick={logout}>Logout</button>
+        <button className="btn-header" onClick={logout}>Logout</button>
        )} 
        {userStatus === 'loggedout' && (
-        <button className="btn-logout" onClick={goToSignUp}>Sign up</button>
+        <button className="btn-header" onClick={goToSignUp}>Sign up</button>
        )} 
       </>
     </Nav>
@@ -75,7 +87,7 @@ const Wrapper = styled.header`
   background: var(--color-alabama-crimson);
   height: 110px;
   padding: var(--padding-page) 18px;
-  .btn-logout {
+  .btn-header {
     background: var(--color-selective-yellow);
     border: 1px solid transparent;
     border-radius: 4px;

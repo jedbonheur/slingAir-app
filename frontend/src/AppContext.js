@@ -8,10 +8,6 @@ export const AppContextProvider = ({ children }) => {
  const [user, setUserName] = useState(
     reactLocalStorage.getObject('user')
  )
- const theuser = reactLocalStorage.getObject('user')
-
- console.log('user on context', user)
- console.log('theuser', theuser.username)
 
   return (
     <AppContext.Provider

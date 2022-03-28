@@ -78,6 +78,7 @@ router.get('/loggedin',  async(req,res,next) => {
           { 
             status:200,
             user : {
+              userId: user._id,
               username : user.username,
               email : user.email
             },
@@ -146,10 +147,6 @@ router.post('/signup', async (req,res) => {
       }
   })
 
- 
-
-
-
 
   // @method GET
   // @route flights/
@@ -188,6 +185,7 @@ router.post('/signup', async (req,res) => {
     const givenName = req.body.givenName
     const surName = req.body.surName
     const email = req.body.email
+    const userId = req.body.userId
     
     // reserve flight seat
     Flight.updateOne(
@@ -209,11 +207,11 @@ router.post('/signup', async (req,res) => {
 
   // register a passanger to the backend
   
-    const newReservation = new Reservation({_id, flight, seat, givenName, surName, email})
+    const newReservation = new Reservation({_id, flight, seat, givenName, surName, email,userId})
     newReservation.save().
       then(()=>{
         Flight.updateOne({"seats.id":"seat"},
-          {$set: {"seast.$.isAvailable" : false }},(err,data) => {
+          {$set: {"seats.$.isAvailable" : false }},(err,data) => {
             if(err) {
               console.log(err)
             }
@@ -238,6 +236,32 @@ router.post('/signup', async (req,res) => {
    
     const id = req.params.id;
     Reservation.findById(id)
+    .then(data => {
+        res.status(200).json(
+          { 
+            status: 200, 
+            data: data, 
+            message: "success" 
+          });
+      })
+      .catch(err => {
+        res.status(err).json(
+          { 
+            status: err,  
+            message: "error" 
+          });
+      })
+  })
+  
+// @method get
+  // @route /view-reservation
+  // @desc get reservation under one user
+ 
+
+  router.get('/my-reservation/:id', (req,res) => {
+   
+    const id = req.params.id;
+    Reservation.find({userId: id})
     .then(data => {
         res.status(200).json(
           { 

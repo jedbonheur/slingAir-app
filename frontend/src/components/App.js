@@ -9,6 +9,7 @@ import GlobalStyles from "./GlobalStyles";
 import Login from "./Login"
 import SignUp from "./SignUp"
 import AuthenticatingLoader from './AuthenticatingLoader'
+import Reservations from "./Reservations"
 import {AppContext} from "../AppContext"
 
 
@@ -44,7 +45,7 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Header isSignedin={isSignedin} />
+      <Header />
       <Main>
         <Switch>
           <Route exact path="/">
@@ -55,6 +56,9 @@ const App = () => {
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/reservations">
+            <Reservations />
           </Route>
           <Route exact path="/register">
             <SignUp />

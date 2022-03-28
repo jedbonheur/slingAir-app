@@ -27,6 +27,10 @@ const reservationSchema = new Schema({
   email: {
    type: String,
    require: true,
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 

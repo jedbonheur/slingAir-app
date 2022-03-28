@@ -1,9 +1,8 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect,useContext} from "react";
 import styled from "styled-components";
 import Plane from './Plane'
+import {AppContext} from "../../AppContext"
 import { useHistory } from "react-router-dom";
-
-
 
 const { v4: uuidv4 } = require('uuid')
 
@@ -17,7 +16,9 @@ const SeatSelect = ({}) => {
   const [planeSeats, setPlaneSeats] = useState([])
   const [selectedSeat, setSelectedSeat] = useState([])
   let history = useHistory();
+  const {user} = useContext(AppContext)
   
+
   useEffect(() => {
     fetch('/flights')
     .then(res=> res.json())
@@ -42,6 +43,7 @@ const SeatSelect = ({}) => {
     setPlaneSeats(getPlaneSeats.seats)
     setSelectedFlight(flight)
   }
+  
  
   const registerPlace = (e) => {
     e.preventDefault();
@@ -52,6 +54,7 @@ const SeatSelect = ({}) => {
     givenName: e.target.fname.value,
     surName: e.target.lname.value,
     email: e.target.email.value,
+    userId : user.userId
     }
     fetch('/reservation', {
       method: 'POST',
@@ -79,8 +82,8 @@ const SeatSelect = ({}) => {
         <div className="selectFlight">
          {
              flights && flights.length > 0 && (
-              <select className="select-form" name="flight" id="flights" onChange={flightSelected}>
-                <option value="Select flight" disabled >Select flight</option>
+              <select className="select-form" defaultValue="default" name="flight" id="flights" onChange={flightSelected}>
+                <option value="default" disabled >Select flight</option>
                   {flights.map(flight => 
                       <option className="options" key={flight._id} value={flight._id} >{flight._id}</option>
                   )}

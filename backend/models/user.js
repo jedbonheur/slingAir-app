@@ -20,7 +20,15 @@ const userSchema = new Schema({
   createdAt: {
    type: Date,
    default: Date.now()
-  }
+  },
+  reservations: [
+      { 
+        reservationId :{
+            type: String,
+            ref: 'Reservation'
+        }
+      }
+    ]
 });
 
 // hashing password
